@@ -4,7 +4,7 @@ from aiogram.types import Message
 
 from game.protocols import Game
 from database.protocols import StatsStorage
-from game.exceptions import AlreadyActiveGameError, NoActiveGameError
+from game.service import AlreadyActiveGameError, NoActiveGameError
 
 
 class TelegramBot:
