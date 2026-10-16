@@ -6,14 +6,14 @@ from dotenv import load_dotenv
 from bot.app import TelegramBot
 from database.repository import StatsRepository
 from game.service import GameService, RandomWordPicker
-from similarity.model import DummyModel
+from similarity.model import TransformerModel
 
 
 async def main() -> None:
     load_dotenv()
     token = os.environ["TELEGRAM_TOKEN"]
 
-    model = DummyModel()
+    model = TransformerModel("sergeyzh/rubert-tiny-sts-v2")
     picker = RandomWordPicker()
     database = StatsRepository("stats.sqlite3")
 
