@@ -1,5 +1,7 @@
 import asyncio
+import logging
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -10,10 +12,19 @@ from similarity.model import TransformerModel
 
 
 async def main() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        handlers=[
+            logging.FileHandler(Path(__file__).with_name("bot.log"), encoding="utf-8"),
+            logging.StreamHandler(),
+        ],
+        force=True,
+    )
     load_dotenv()
     token = os.environ["TELEGRAM_TOKEN"]
 
-    model = TransformerModel("sergeyzh/rubert-tiny-sts-v2")
+    model = TransformerModel("sergeyzh/LaBSE-ru-sts")
     picker = RandomWordPicker()
     database = StatsRepository("stats.sqlite3")
 

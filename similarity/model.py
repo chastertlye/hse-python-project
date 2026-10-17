@@ -2,8 +2,6 @@ from collections import OrderedDict
 
 from sentence_transformers import SentenceTransformer
 
-from .protocols import SimilarityModel  # noqa
-
 
 class TransformerModel:
     def __init__(self, model_name, maxsize=128):
@@ -17,7 +15,8 @@ class TransformerModel:
             return 0.0
 
         embeddings = self._encode(first), self._encode(second)
-        return embeddings[0] @ embeddings[1]
+        p = embeddings[0] @ embeddings[1]
+        return 1.012 / (1 + 3 ** (-54 * p + 50))
 
     def _encode(self, text):
         if text in self._cache:

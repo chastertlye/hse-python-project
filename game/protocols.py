@@ -3,10 +3,18 @@ from typing import Protocol
 
 
 @dataclass(frozen=True)
+class Guess:
+    word: str
+    similarity: float
+    is_correct: bool = False
+
+
+@dataclass(frozen=True)
 class GuessResult:
     similarity: float
     is_correct: bool
     attempts: int
+    guesses: tuple[Guess, ...] = ()
 
 
 class NoActiveGameError(Exception):
@@ -24,7 +32,7 @@ class WordPicker(Protocol):
 
 
 class Game(Protocol):
-    def start_game(self, user_id: int) -> None:
+    def start_game(self, user_id: int) -> str:
         """Начать новую игру, если она сейчас не начата."""
         ...
 
